@@ -6,7 +6,7 @@
  * @author thiago
  */
 
-namespace App;
+namespace app;
 
 use \InvalidArgumentException as Exception,
     \RuntimeException;

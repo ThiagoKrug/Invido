@@ -15,7 +15,7 @@ require_once 'app/JogoApp.php';
 require_once 'app/Jogo.php';
 require_once 'app/Jogador.php';
 
-
+/* @var $jogoApp app\JogoApp */
 $jogoApp = new \app\JogoApp();
 
 require_once 'Zend/Session/Namespace.php';
@@ -25,7 +25,6 @@ if (isset($session->jogo) === false) {
     $session->jogo = new \app\Jogo();
 }
 
-
 $jogoApp->get('/', function () use($session) {
             require '../app/view/index.phtml';
         });
@@ -33,6 +32,10 @@ $jogoApp->get('/', function () use($session) {
 $jogoApp->get('/oi', function () {
             echo 'helloooo mano!';
         });
+
+$jogoApp->comParametros('/chutar', function () use($session) {
+   
+});
 /*
 $jogoApp->get('/pegar-carta', function () use($session) {
             $carta = $session->jogo->getCarta();
