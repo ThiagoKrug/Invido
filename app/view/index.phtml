@@ -1,13 +1,175 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Invido!!</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type='text/javascript' src="<?= APPLICATION_PATH . 'js/jquery.js' ?>" ></script>
+        <script type='text/javascript' src="<?= APPLICATION_PATH . 'js/baralho.js' ?>" ></script>
+        <script type='text/javascript'>
+            $(document).ready(function() {
+                atualizarCartasRestantes();
+            })
+            
+            function atualizarCartasRestantes() {
+                console.log('atualizando cartas restantes...');
+                $.ajax({
+                    url: '<?= APPLICATION_PATH . 'cartas-restantes/' ?>',
+                    type: "GET",
+                    context: this,
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        $('#cartasRestantes').text(data);
+                        console.log('cartas atualizadas');
+                        if (data < 3) {
+                            finalizarJogo();
+                        }
+                    }
+                });
+            }
+            
+            function finalizarJogo() {
+                $('#botao').attr('disabled', true);
+                $('#jogo').append('<button id="novoJogo" onclick="novoJogo()">Novo Jogo</button>');
+                console.log('jogo finalizado');
+            }
+            
+            function novoJogo() {
+                console.log('iniciando novo jogo');
+                $.ajax({
+                    url: '<?= APPLICATION_PATH . 'novo-jogo/' ?>',
+                    type: "GET",
+                    context: this,
+                    async: false,
+                    success: function() {
+                        $('#novoJogo').remove();
+                        $('#botao').attr('disabled', false);
+                        resetCampos();
+                        console.log('jogo iniciado');
+                    }
+                });
+            }
+            
+            function resetCampos() {
+                $('#resultado').text('');
+                atualizarCartasRestantes();
+                $('#ultimoInvido').text('');
+                $('#carta0').text('')
+                $('#carta1').text('')
+                $('#carta2').text('')
+                atualizaPlacar();
+            }
+            
+            function atualizarUltimoInvido() {
+                console.log('atualizando invido...');
+                $.ajax({
+                    url: '<?= APPLICATION_PATH . 'ultimo-invido/' ?>',
+                    type: "GET",
+                    context: this,
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        $('#ultimoInvido').text(data);
+                        console.log('invido atualizado');
+                    }
+                });
+            }
+            
+            function atualizarUltimasCartas() {
+                console.log('atualizando últimas cartas...');
+                $.ajax({
+                    url: '<?= APPLICATION_PATH . 'ultimas-tres-cartas/' ?>',
+                    type: "GET",
+                    context: this,
+                    dataType: 'json',
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        for (var i in data) {
+                            console.log(data[i]);
+                            $('#carta' + i).text(data[i].valor + ' de ' + data[i].naipe);
+                        }
+                        console.log('ultimas cartas atualizadas');
+                    }
+                });
+            }
+            
+            function atualizaResultado(acertou) {
+                if (acertou) {
+                    $('#resultado').text('Você acertou! :D');
+                } else {
+                    $('#resultado').text('Você errou! :(');
+                }
+                console.log('resultado atualizado');
+            }
+            
+            function atualizarAcertos() {
+                console.log('atualizando acertos...');
+                $.ajax({
+                    url: '<?= APPLICATION_PATH . 'acertos/' ?>',
+                    type: "GET",
+                    context: this,
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        $('#acertos').text(data);
+                        console.log('acertos atualizados');
+                    }
+                });
+            }
+            
+            function atualizarErros() {
+                console.log('atualizando erros...');
+                $.ajax({
+                    url: '<?= APPLICATION_PATH . 'erros/' ?>',
+                    type: "GET",
+                    context: this,
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        $('#erros').text(data);
+                        console.log('erros atualizados');
+                    }
+                });
+            }
+            
+            function atualizaPlacar() {
+                atualizarAcertos();
+                atualizarErros();
+            }
+            
+            function chutar() {
+                var valor = $('#valor').val();
+                
+                console.log('chutando valor ' + valor + '...');
+                console.log("<?= APPLICATION_PATH . 'chute/' ?>" + valor);
+                $.ajax({
+                    url: "<?= APPLICATION_PATH . 'chute/' ?>" + valor,
+                    type: "GET",
+                    context: this,
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        atualizaResultado(data);
+                        atualizarCartasRestantes();
+                        atualizarUltimoInvido();
+                        atualizarUltimasCartas();
+                        atualizaPlacar();
+                    }
+                });
+            }
+        </script>
     </head>
     <body>
-        <div>Cartas restantes: 1234</div>
-        <div><input type="text" /><button>Adivinhar!</button></div>
-        <div>Invido obtido: 123</div>
-        <div id="resultado">Você acertou! :D</div>
+        <div>Cartas restantes: <span id="cartasRestantes"></span></div>
+        <div id="jogo"><input id="valor" type="text" /><button id="botao" onclick="chutar()">Chutar!</button></div>
+        <div>Invido obtido: <span id="ultimoInvido"></span></div>
+        <div>Cartas: <span id="carta0"></span>, <span id="carta1"></span>, <span id="carta2"></span></div>
+        <div id="resultado"></div><br /><br />
+        <div>
+            Placar: <br />
+            Acertos: <span id="acertos"></span>
+            Erros: <span id="erros"></span>
+        </div>
     </body>
 </html>

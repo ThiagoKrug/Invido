@@ -20,4 +20,8 @@ class Jogador {
         $this->chute = $chute;
     }
     
+    public function getChute() {
+        return $this->chute;
+    }
+    
 }

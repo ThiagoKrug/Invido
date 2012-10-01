@@ -26,12 +26,20 @@ class Placar {
         $this->acertos = $acertos;
     }
     
+    public function addAcertos() {
+        $this->acertos++;
+    }
+    
     public function getErros() {
         return $this->erros;
     }
     
     public function setErros($erros) {
         $this->erros = $erros;
+    }
+    
+    public function addErros() {
+        $this->erros++;
     }
 
 }
