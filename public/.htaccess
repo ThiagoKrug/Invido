@@ -1,5 +1,5 @@
 RewriteEngine On
-SetEnv APPLICATION_PATH "/Invido/public/"
+#SetEnv APPLICATION_PATH "/Invido/public/"
 
 #RewriteBase /www/tak_me/public/
 
