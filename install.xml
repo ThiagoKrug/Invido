@@ -62,6 +62,19 @@
             <description/>
             <file override="update" src="library/package.phar" targetdir="$INSTALL_PATH/library/"/>
         </pack>
+		<pack name="Zend Session" preselected="yes" required="yes">
+            <description/>
+            <file override="update" src="library/Zend/Session.php" targetdir="$INSTALL_PATH/library/Zend/"/>
+			<file override="update" src="library/Zend/Session/" targetdir="$INSTALL_PATH/library/Zend/"/>
+        </pack>
+		<pack name="Zend Json" preselected="yes" required="yes">
+            <description/>
+			<file override="update" src="library/Zend/Json/" targetdir="$INSTALL_PATH/library/Zend/"/>
+        </pack>
+		<pack name="Zend Exception" preselected="yes" required="yes">
+            <description/>
+            <file override="update" src="library/Zend/Exception.php" targetdir="$INSTALL_PATH/library/Zend/"/>
+        </pack>
 	</packs>
 	
     <native type="izpack" name="ShellLink.dll"/>
