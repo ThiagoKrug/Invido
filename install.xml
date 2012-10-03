@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<installation version="1.0">
+    <info>
+        <appname>Invido</appname>
+        <appversion>1.0</appversion>
+        <appsubpath>Invido</appsubpath>
+        <url>https://github.com/ThiagoKrug/Invido</url>
+        <authors>
+            <author name="ThiagoKrug" email="thiagockrug arroba gmail ponto com"/>
+        </authors>
+		<uninstaller name="Uninstaller.jar" write="yes"/>
+        <javaversion>1.2</javaversion>
+        <requiresjdk>no</requiresjdk>
+        <run-privileged condition="izpack.windowsinstall|izpack.macinstall"/>
+    </info>
+	
+	<guiprefs height="480" resizable="yes" width="640">
+        <laf name="substance">
+            <param name="variant" value="business-blue"/>
+            <os family="windows"/>
+            <os family="unix"/>
+            <os family="mac"/>
+        </laf>
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+    </guiprefs>
+    
+    <locale>
+        <langpack iso3="por"/>
+    </locale>
+    
+    <resources>
+        <res id="LicencePanel.licence" src="COPYING" type="plain" parse="yes"/>
+        <res id="HTMLInfoPanel.info" src="README.md" type="plain" parse="yes"/>
+    </resources>
+    
+    <panels>
+        <panel classname="CheckedHelloPanel"/>
+        <panel classname="HTMLInfoPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="SimpleFinishPanel"/>
+    </panels>
+    
+	<packs>
+		<pack name="Invido" preselected="yes" required="yes">
+            <description/>
+			<file override="update" src="public/.htaccess" targetdir="$INSTALL_PATH/public/"/>
+			<file override="update" src="public/index.php" targetdir="$INSTALL_PATH/public/"/>
+			<file override="update" src="public/js/jquery.js" targetdir="$INSTALL_PATH/public/js/"/>
+			<file override="update" src="app/CartaTruco.php" targetdir="$INSTALL_PATH/app/"/>
+			<file override="update" src="app/Jogador.php" targetdir="$INSTALL_PATH/app/"/>
+			<file override="update" src="app/Jogo.php" targetdir="$INSTALL_PATH/app/"/>
+			<file override="update" src="app/JogoApp.php" targetdir="$INSTALL_PATH/app/"/>
+			<file override="update" src="app/Placar.php" targetdir="$INSTALL_PATH/app/"/>
+            <file override="update" src="app/view/index.phtml" targetdir="$INSTALL_PATH/app/view/"/>
+        </pack>
+        <pack name="API Cartas" preselected="yes" required="yes">
+            <description/>
+            <file override="update" src="library/package.phar" targetdir="$INSTALL_PATH/library/"/>
+        </pack>
+	</packs>
+	
+    <native type="izpack" name="ShellLink.dll"/>
+    <native type="izpack" name="ShellLink_x64.dll"/>
+</installation>

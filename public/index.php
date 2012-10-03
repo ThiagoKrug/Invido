@@ -9,8 +9,8 @@ $url = '/' . substr_replace($url_request, '', 0, strlen(APPLICATION_PATH));
 
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(__DIR__ . '/../'));
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(__DIR__ . '/../library'));
-require_once 'MRCartas/Autoloader.php';
-//include('../build/package.phar');
+//require_once 'MRCartas/Autoloader.php';
+include('package.phar');
 require_once 'app/JogoApp.php';
 require_once 'app/Jogo.php';
 require_once 'app/CartaTruco.php';
